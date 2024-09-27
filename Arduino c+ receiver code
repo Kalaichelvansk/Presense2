@@ -1,0 +1,20 @@
+int ledPin = 13;  //  LED is connected
+char receivedData;  // Variable to store data received from Python
+
+void setup() {
+  pinMode(ledPin, OUTPUT);  // Set LED pin as output
+  Serial.begin(9600);       
+}
+
+void loop() {
+  if (Serial.available() > 0) {  
+  receivedData = Serial.read();  // Read the incoming data
+
+    if (receivedData == '1') {  // If '1' is received, turn on the LED
+      digitalWrite(ledPin, HIGH); 
+    } else if (receivedData == '0') {  // If '0' is received, turn off the LED
+      digitalWrite(ledPin, LOW);  
+    }
+  }
+}
+// example code to turn on a single led even a single high power load
