@@ -2,18 +2,18 @@ import cv2
 import serial
 import time
 
-# Initialize serial connection to Arduino
+# serial connection to Arduino
 arduino = serial.Serial('COM3', 9600)  # Change 'COM3' to your Arduino port
 time.sleep(2)
 
-# Load pre-trained Haar Cascade model for human detection
+#  pre-trained Haar Cascade model for human detection
 human_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_fullbody.xml')
 
-# Start video capture (use 0 for webcam or video path) 
+# video capture 
 cap = cv2.VideoCapture(0)
 
 while True:
-    # Read each frame from the video source
+    
     ret, frame = cap.read()
     gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)  # Convert to grayscale
     
@@ -27,12 +27,11 @@ while True:
     else:
         arduino.write(b'0')  # Send signal to turn off LED
 
-    # Draw rectangles around detected humans
+ 
     for (x, y, w, h) in humans:
         cv2.rectangle(frame, (x, y), (x + w, y + h), (255, 0, 0), 2)
 
-    # Show the video feed
-    cv2.imshow('Frame', frame)
+     cv2.imshow('Frame', frame)
     
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
